@@ -1,22 +1,92 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     background-color: #141414;
-    color: white;
+    color: #8a8a8a;
+}
+
+.light-mode {
+    background-color: #ffffff;
 }
 
 .navbar {
+    margin: 5px;
+    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom: solid 2px #8a8a8a;
 }
 
 .help-icon {
-    height: 50px;
+    height: 30px;
 }
 
 .main-heading {
     font-family: "Roboto Slab", serif;
+    font-size: 30px;
+}
+
+.toggle-btn {
+    height: 30px;
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 100%;
+    border: #8a8a8a solid 3px;
+    padding: 2px;
+}
+
+.toggle-btn > img {
+    height: 100%;
+}
+
+.input-board {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-letter {
+    width: 50px;
+    height: 50px;
+    font-family: "Libre Franklin", sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 2px 2px 3px 0px;
+    text-align: center;
+    background-color: transparent;
+    border: 2px solid #8a8a8a;
+}
+
+.input-letter:focus {
+    outline: none;
+    caret-color: transparent;
+}
+
+.keyboard-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+}
+
+.keyboard-row > button {
+    height: 40%;
+    font-family: "Libre Franklin", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 20px 10px;
+    margin-bottom: 2%;
+    margin-left: 2px;
+    background-color: transparent;
+    border: 2px solid #8a8a8a;
+    color: #8a8a8a;
+    border-radius: 10px;
 }
