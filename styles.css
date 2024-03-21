@@ -1,0 +1,22 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #141414;
+    color: white;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.help-icon {
+    height: 50px;
+}
+
+.main-heading {
+    font-family: "Roboto Slab", serif;
+}

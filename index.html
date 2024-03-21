@@ -4,51 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordle</title>
+    <link rel="icon" type="img/x-icon" href="wordle-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div>
-        <img src="help-icon.png" alt="How to Play?">
-    </div>
-    <div>Wordle</div>
+    <header class="navbar">
+        <img class="help-icon" src="help-icon.png" alt="How to Play?">
+        <h1 class="main-heading">Wordle</h1>
+    </header>
     
-    <div>
-        <div>
+    <div class="input-board">
+        <div class="input-row">
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
         </div>
-        <div>
+        <div class="input-row">
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
         </div>
-        <div>
+        <div class="input-row">
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
         </div>
-        <div>
+        <div class="input-row">
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
         </div>
-        <div>
+        <div class="input-row">
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
         </div>
-        <div>
+        <div class="input-row">
             <input type="text"/>
             <input type="text"/>
             <input type="text"/>
@@ -57,8 +61,8 @@
         </div>
     </div>
 
-    <div>
-        <div>
+    <div class="keyboard-layout">
+        <div class="keyboard-row">
             <button>Q</button>
             <button>W</button>
             <button>E</button>
@@ -70,7 +74,7 @@
             <button>O</button>
             <button>P</button>
         </div>
-        <div>
+        <div class="keyboard-row">
             <button>A</button>
             <button>S</button>
             <button>D</button>
@@ -81,7 +85,7 @@
             <button>K</button>
             <button>L</button>
         </div>
-        <div>
+        <div class="keyboard-row">
             <button>ENTER</button>
             <button>Z</button>
             <button>X</button>
