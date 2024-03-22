@@ -50,19 +50,22 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    cursor: default;
 }
 
 .input-letter {
     width: 50px;
     height: 50px;
     font-family: "Libre Franklin", sans-serif;
-    font-size: 30px;
-    font-weight: 700;
+    font-size: 25px;
+    font-weight: bold;
     margin: 2px 2px 3px 0px;
     text-align: center;
     background-color: transparent;
     border: 2px solid #8a8a8a;
     color: #8a8a8a;
+    cursor: default;
+    text-transform: uppercase;
 }
 
 .input-letter:focus {
