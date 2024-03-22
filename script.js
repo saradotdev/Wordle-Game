@@ -1,6 +1,7 @@
 // for light and dark themes
 toggleButton = document.querySelector(".toggle-btn");
 inputs = document.querySelectorAll("input");
+let i = 0;
 
 function toggleMode(event) {
     let buttonImgPath = event.target.src;
@@ -18,9 +19,9 @@ function isLetter(value) {
     return /[a-zA-Z]/.test(value);
 }
 
-function handleKeyStroke(value) {
+function handleKeyStroke(value, id) {
     if (isLetter(value) || value === "Backspace" || value === "Enter") {
-        inputs.input.value = value;
+        inputs[parseInt(id) + 1].focus();
     } else {
     }
 }
@@ -33,7 +34,7 @@ function init() {
 
     inputs.forEach(input => {
         input.addEventListener("keyup", function(event) {
-            handleKeyStroke(event.target.value);
+            handleKeyStroke(event.target.value, event.target.id);
         })
     })
 }
