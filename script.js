@@ -2,6 +2,8 @@ toggleButton = document.querySelector(".toggle-btn");
 inputs = document.querySelectorAll("input");
 inputRows = document.querySelectorAll(".input-row");
 let secretWord;
+let formedWord = "";
+let letterBoxes;
 
 function toggleMode(event) { // for light and dark themes
     let buttonImgPath = event.target.src;
@@ -13,6 +15,9 @@ function toggleMode(event) { // for light and dark themes
 
     let element = document.body;
     element.classList.toggle("light-mode");
+    inputRows.forEach(inputRow => {
+        inputRow.classList.toggle("input-row-light-mode");
+    })
 }
 
 function isLetter(value) {
@@ -31,19 +36,19 @@ function handleBackspace(id) {
     }
 }
 
-function handleEnter(id) {
+async function handleEnter(id) {
     letterBoxes = document.querySelectorAll(`#${id} .input-letter`);
 
-    let wordFormed = "";
+    formedWord = "";
     letterBoxes.forEach(letterBox => {
         if (letterBox.value.length === 1) {
-            wordFormed += letterBox.value;
+            formedWord += letterBox.value;
         }
     });
 
-    if (wordFormed.length === 5) {
-        if(validateWord(wordFormed)) {
-            // 
+    if (formedWord.length === 5) {
+        if (await validateWord(formedWord) === true) {
+            checkWord();
         }
     }
 }
@@ -56,6 +61,21 @@ async function validateWord(word) {
     const response = await promise.json();
     const isValid = response["validWord"];
     return isValid;
+}
+
+function checkWord() {
+    secretWordLetters = secretWord.split("");
+    formedWordLetters = formedWord.split("");
+
+    for (let i = 0; i < secretWordLetters.length; i++) {
+        if (secretWordLetters[i] === formedWordLetters[i]) {
+            letterBoxes[i].classList.add("correct");
+        } else if (secretWordLetters.includes(formedWordLetters[i])) {
+            letterBoxes[i].classList.add("close");
+        } else if (secretWordLetters[i] !== formedWordLetters[i]) {
+            letterBoxes[i].classList.add("wrong");
+        }
+    }
 }
 
 async function init() {
