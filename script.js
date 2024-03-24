@@ -1,6 +1,7 @@
 toggleButton = document.querySelector(".toggle-btn");
 inputs = document.querySelectorAll("input");
 inputRows = document.querySelectorAll(".input-row");
+keyboardKeys = document.querySelectorAll(".keyboard-row button");
 let secretWord;
 let formedWord = "";
 let letterBoxes;
@@ -21,7 +22,7 @@ function toggleMode(event) { // for light and dark themes
 }
 
 function isLetter(value) {
-    return /[a-zA-Z]/.test(value);
+    return /^[a-zA-Z]$/.test(value);
 }
 
 function handleKeyStroke(value, id, inputRow) {
@@ -40,6 +41,13 @@ function handleBackspace(id) {
 async function handleEnter(id) {
     letterBoxes = document.querySelectorAll(`#${id} .input-letter`);
 
+    formedWord = "";
+    letterBoxes.forEach(letterBox => {
+        if (letterBox.value.length === 1) {
+            formedWord += letterBox.value;
+        }
+    });
+
     let nextRow; // for getting the next row
     for (let i = 0; i < inputRows.length; i++) {
         if (inputRows[i].id === id) {
@@ -48,17 +56,12 @@ async function handleEnter(id) {
         }
     }
 
-    formedWord = "";
-    letterBoxes.forEach(letterBox => {
-        if (letterBox.value.length === 1) {
-            formedWord += letterBox.value;
-        }
-    });
-
     if (formedWord.length === 5) {
         if (await validateWord(formedWord) === true) {
             checkWord();
             document.querySelectorAll(`#${nextRow.id} .input-letter`)[0].focus(); // point to next row
+        } else if (await validateWord(formedWord) === false) {
+            markInvalidWord(letterBoxes);
         }
     }
 }
@@ -76,13 +79,15 @@ async function validateWord(word) {
 function checkWord() {
     secretWordLetters = secretWord.split("");
     formedWordLetters = formedWord.split("");
-    makeMap(secretWordLetters);
+    const occurrences = makeMap(secretWordLetters);
 
-    for (let i = 0; i < secretWordLetters.length; i++) {
+    for (let i = 0; i < 5; i++) {
         if (secretWordLetters[i] === formedWordLetters[i]) {
             letterBoxes[i].classList.add("correct");
-        } else if (secretWordLetters.includes(formedWordLetters[i])) {
+            occurrences[secretWordLetters[i]]--; // decrease occurrence count
+        } else if (occurrences[formedWordLetters[i]] > 0) {
             letterBoxes[i].classList.add("close");
+            occurrences[formedWordLetters[i]]--;
         } else if (secretWordLetters[i] !== formedWordLetters[i]) {
             letterBoxes[i].classList.add("wrong");
         }
@@ -90,7 +95,81 @@ function checkWord() {
 }
 
 function makeMap(array) {
-    console.log(array);
+    let obj = {};
+    for (let i = 0; i < array.length; i++) {
+        if (obj[array[i]]) {
+            obj[array[i]] += 1;
+        } else {
+            obj[array[i]] = 1;
+        }
+    }
+    return obj;
+}
+
+function markInvalidWord(boxes) {
+    boxes.forEach(box => {
+        box.classList.remove("invalid");
+    });
+
+    // long enough for the browser to repaint without the "invalid class" so we can then add it again
+    // setTimeout takes a function and time
+    setTimeout(() => {
+        boxes.forEach(box => {
+            box.classList.add("invalid");
+        })
+    }, 10);
+}
+
+function handleInput() {
+    inputs.forEach(input => {
+        input.addEventListener("keydown", function(event) {
+            if (event.key === "Backspace") {
+                handleBackspace(event.target.id);
+            } else if (event.key === "Enter") {
+                handleEnter(event.target.parentElement.id);
+            } else if (isLetter(event.key)) {
+                handleKeyStroke(event.target.value, event.target.id, event.target.parentElement);
+            } else {
+                event.preventDefault();
+            }
+        });
+    });
+}
+
+function handleKeyPress() {
+    keyboardKeys.forEach(key => {
+        key.addEventListener("click", function(event) {
+            if (isLetter(event.target.innerText)) {
+                for (let i = 0; i < inputs.length; i++) {
+                    if (inputs[i].value.length === 0) {
+                        inputs[i].value = event.target.innerText;
+                        inputs[i + 1].focus();
+                        break;
+                    }
+                }
+            } else if (event.target.innerText === "⌫") {
+                for (let i = inputRows.length - 1; i >= 0; i--) {
+                    letterBoxes = document.querySelectorAll(`#${inputRows[i].id} .input-letter`);
+                    for (let i = letterBoxes.length - 1; i >= 0; i--) {
+                        if (letterBoxes[i].value.length === 1) {
+                            letterBoxes[i].value = "";
+                            letterBoxes[i].focus();
+                            break;
+                        }
+                    }
+                }
+            } else if (event.target.innerText === "ENTER") { // ERROR HERE
+                for (let i = inputRows.length - 1; i >= 0; i--) {
+                    letterBoxes = document.querySelectorAll(`#${inputRows[i].id} .input-letter`);
+                    letterBoxes.forEach(letterBox => {
+                        if (letterBox.value.length === 1) {
+                            handleEnter(inputRows[i].id);
+                        }
+                    });
+                } 
+            }
+        });
+    });
 }
 
 async function init() {
@@ -105,19 +184,9 @@ async function init() {
     
     inputs[0].focus(); // for focusing on the first input box by default, for user to type in
 
-    inputs.forEach(input => {
-        input.addEventListener("keydown", function(event) {
-            if (event.key === "Backspace") {
-                handleBackspace(event.target.id);
-            } else if (event.key === "Enter") {
-                handleEnter(event.target.parentElement.id);
-            } else if (isLetter(event.key)) {
-                handleKeyStroke(event.target.value, event.target.id, event.target.parentElement);
-            } else {
-                event.preventDefault();
-            }
-        })
-    })
+    handleInput();
+
+    handleKeyPress();
 }
 
 init();

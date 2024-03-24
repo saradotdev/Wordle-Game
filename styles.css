@@ -45,7 +45,7 @@ body {
 }
 
 .input-board {
-    margin-top: 30px;
+    margin-top: 1.5%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -69,7 +69,7 @@ body {
     font-family: "Libre Franklin", sans-serif;
     font-size: 25px;
     font-weight: bold;
-    margin: 2px 2px 3px 0px;
+    margin: 4px;
     text-align: center;
     background-color: transparent;
     border: 2px solid #8a8a8a;
@@ -95,12 +95,34 @@ body {
     background-color: #787c7e;
 }
 
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(5px);
+    }
+    50% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.invalid {
+    animation: shake 0.2s linear 2;
+}
+
 .keyboard-layout {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 2%;
+    margin-top: 1.5%;
 }
 
 .keyboard-row {
@@ -109,13 +131,12 @@ body {
 }
 
 .keyboard-row > button {
-    height: 40%;
+    height: 35%;
     font-family: "Libre Franklin", sans-serif;
     font-size: 18px;
     font-weight: 600;
-    padding: 6% 10px;
-    margin-bottom: 2%;
-    margin-left: 2px;
+    padding: 5.5% 10px;
+    margin: 3px 2px;
     background-color: transparent;
     border: 2px solid #8a8a8a;
     color: #8a8a8a;
