@@ -24,9 +24,10 @@ function isLetter(value) {
     return /[a-zA-Z]/.test(value);
 }
 
-function handleKeyStroke(value, id) {
+function handleKeyStroke(value, id, inputRow) {
+    letterBoxes = document.querySelectorAll(`#${inputRow.id} .input-letter`);
     if (isLetter(value)) {
-        inputs[parseInt(id) + 1].focus();
+        letterBoxes[parseInt(id) + 1].focus();
     }
 }
 
@@ -39,6 +40,14 @@ function handleBackspace(id) {
 async function handleEnter(id) {
     letterBoxes = document.querySelectorAll(`#${id} .input-letter`);
 
+    let nextRow; // for getting the next row
+    for (let i = 0; i < inputRows.length; i++) {
+        if (inputRows[i].id === id) {
+            nextRow = inputRows[i + 1];
+            break;
+        }
+    }
+
     formedWord = "";
     letterBoxes.forEach(letterBox => {
         if (letterBox.value.length === 1) {
@@ -49,6 +58,7 @@ async function handleEnter(id) {
     if (formedWord.length === 5) {
         if (await validateWord(formedWord) === true) {
             checkWord();
+            document.querySelectorAll(`#${nextRow.id} .input-letter`)[0].focus(); // point to next row
         }
     }
 }
@@ -66,6 +76,7 @@ async function validateWord(word) {
 function checkWord() {
     secretWordLetters = secretWord.split("");
     formedWordLetters = formedWord.split("");
+    makeMap(secretWordLetters);
 
     for (let i = 0; i < secretWordLetters.length; i++) {
         if (secretWordLetters[i] === formedWordLetters[i]) {
@@ -76,6 +87,10 @@ function checkWord() {
             letterBoxes[i].classList.add("wrong");
         }
     }
+}
+
+function makeMap(array) {
+    console.log(array);
 }
 
 async function init() {
@@ -97,7 +112,7 @@ async function init() {
             } else if (event.key === "Enter") {
                 handleEnter(event.target.parentElement.id);
             } else if (isLetter(event.key)) {
-                handleKeyStroke(event.target.value, event.target.id); // input letter
+                handleKeyStroke(event.target.value, event.target.id, event.target.parentElement);
             } else {
                 event.preventDefault();
             }
