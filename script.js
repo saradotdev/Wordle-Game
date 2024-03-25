@@ -83,6 +83,11 @@ function checkWord() {
 
     for (let i = 0; i < 5; i++) {
         if (secretWordLetters[i] === formedWordLetters[i]) {
+            keyboardKeys.forEach(key => { // ERROR HERE
+                if (key.innerText === formedWordLetters[i]) {
+                    key.classList.add("correct");
+                }
+            });
             letterBoxes[i].classList.add("correct");
             occurrences[formedWordLetters[i]]--;
         } else if (occurrences[formedWordLetters[i]] > 0) {
@@ -147,17 +152,17 @@ function handleKeyPress() {
                         break;
                     }
                 }
-            } else if (event.target.innerText === "⌫") { // ERROR HERE
-                for (let i = inputRows.length - 1; i >= 0; i--) {
-                    letterBoxes = document.getElementById(inputRows[i].id).getElementsByClassName("input-letter");
-                    // letterBoxes = document.querySelectorAll(`#${inputRows[i].id} .input-letter`);
-                    for (let i = letterBoxes.length - 1; i >= 0; i--) {
-                        if (letterBoxes[i].value.length === 1) {
-                            letterBoxes[i].value = "";
-                            break;
+            } else if (event.target.innerText === "⌫") {
+                loop:
+                    for (let i = inputRows.length - 1; i >= 0; i--) {
+                        letterBoxes = document.getElementById(inputRows[i].id).getElementsByClassName("input-letter");
+                        for (let j = letterBoxes.length - 1; j >= 0; j--) {
+                            if (letterBoxes[j].value.length === 1) {
+                                letterBoxes[j].value = "";
+                                break loop;
+                            }
                         }
                     }
-                }
             } else if (event.target.innerText === "ENTER") {
                 for (let i = inputRows.length - 1; i >= 0; i--) {
                     letterBoxes = document.querySelectorAll(`#${inputRows[i].id} .input-letter`);

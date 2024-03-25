@@ -131,15 +131,27 @@ body {
 }
 
 .keyboard-row > button {
-    height: 35%;
+    text-align: center;
+    height: 65px;
+    width: 40px;
     font-family: "Libre Franklin", sans-serif;
     font-size: 18px;
     font-weight: 600;
-    padding: 5.5% 10px;
+    padding: 5% 10px;
     margin: 3px 2px;
     background-color: transparent;
     border: 2px solid #8a8a8a;
     color: #8a8a8a;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.keyboard-row .enter-key {
+    font-size: 10px;
+    width: 60px;
+}
+
+.keyboard-row .backspace-key {
+    font-size: 15px;
+    width: 60px;
 }
