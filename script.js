@@ -44,7 +44,7 @@ async function handleEnter(id) {
     formedWord = "";
     letterBoxes.forEach(letterBox => {
         if (letterBox.value.length === 1) {
-            formedWord += letterBox.value;
+            formedWord += letterBox.value.toUpperCase();
         }
     });
 
@@ -79,12 +79,12 @@ async function validateWord(word) {
 function checkWord() {
     secretWordLetters = secretWord.split("");
     formedWordLetters = formedWord.split("");
-    const occurrences = makeMap(secretWordLetters);
+    let occurrences = makeMap(secretWordLetters);
 
     for (let i = 0; i < 5; i++) {
         if (secretWordLetters[i] === formedWordLetters[i]) {
             letterBoxes[i].classList.add("correct");
-            occurrences[secretWordLetters[i]]--; // decrease occurrence count
+            occurrences[formedWordLetters[i]]--;
         } else if (occurrences[formedWordLetters[i]] > 0) {
             letterBoxes[i].classList.add("close");
             occurrences[formedWordLetters[i]]--;
@@ -147,25 +147,32 @@ function handleKeyPress() {
                         break;
                     }
                 }
-            } else if (event.target.innerText === "⌫") {
+            } else if (event.target.innerText === "⌫") { // ERROR HERE
                 for (let i = inputRows.length - 1; i >= 0; i--) {
-                    letterBoxes = document.querySelectorAll(`#${inputRows[i].id} .input-letter`);
+                    letterBoxes = document.getElementById(inputRows[i].id).getElementsByClassName("input-letter");
+                    // letterBoxes = document.querySelectorAll(`#${inputRows[i].id} .input-letter`);
                     for (let i = letterBoxes.length - 1; i >= 0; i--) {
                         if (letterBoxes[i].value.length === 1) {
                             letterBoxes[i].value = "";
-                            letterBoxes[i].focus();
                             break;
                         }
                     }
                 }
-            } else if (event.target.innerText === "ENTER") { // ERROR HERE
+            } else if (event.target.innerText === "ENTER") {
                 for (let i = inputRows.length - 1; i >= 0; i--) {
                     letterBoxes = document.querySelectorAll(`#${inputRows[i].id} .input-letter`);
+                    
+                    let arr = []
                     letterBoxes.forEach(letterBox => {
                         if (letterBox.value.length === 1) {
-                            handleEnter(inputRows[i].id);
+                            arr.push("true");
                         }
-                    });
+                    })
+                    
+                    if (arr.length === 5) {
+                        handleEnter(inputRows[i].id);
+                        break;
+                    }
                 } 
             }
         });
@@ -175,7 +182,7 @@ function handleKeyPress() {
 async function init() {
     const promise = await fetch("https://words.dev-apis.com/word-of-the-day");
     const response = await promise.json();
-    secretWord = response["word"];
+    secretWord = response["word"].toUpperCase();
 
     toggleButton
         .addEventListener("click", function(event) {
