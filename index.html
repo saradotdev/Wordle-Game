@@ -19,6 +19,19 @@
         <h1 class="main-heading">Wordle</h1>
         <button class="toggle-btn"><img src="dark-mode.png" alt="Dark Mode"></button>
     </header>
+
+    <div class="how-to-play">
+        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <h2>How To Play</h2>
+        <p>● Each guess must be a valid 5-letter word.</p>
+        <p>● If you guess a letter that is in the right place, 
+            it is shown as <strong>GREEN</strong>.</p>
+        <p>● If you guess a letter that is in the word but not in the right place, 
+            it is shown as <strong>YELLOW</strong>.</p>
+        <p>● If you guess a letter that is not in the word in any place, 
+            it is shown as <strong>GREY</strong>.</p>
+        <p>● Guess the Wordle in 6 tries to WIN the game!</p>
+    </div>
     
     <div class="input-board">
         <div id="row-0" class="input-row">
@@ -67,39 +80,50 @@
 
     <div class="keyboard-layout">
         <div class="keyboard-row">
-            <button>Q</button>
-            <button>W</button>
-            <button>E</button>
-            <button>R</button>
-            <button>T</button>
-            <button>Y</button>
-            <button>U</button>
-            <button>I</button>
-            <button>O</button>
-            <button>P</button>
+            <button class="key">Q</button>
+            <button class="key">W</button>
+            <button class="key">E</button>
+            <button class="key">R</button>
+            <button class="key">T</button>
+            <button class="key">Y</button>
+            <button class="key">U</button>
+            <button class="key">I</button>
+            <button class="key">O</button>
+            <button class="key">P</button>
         </div>
         <div class="keyboard-row">
-            <button>A</button>
-            <button>S</button>
-            <button>D</button>
-            <button>F</button>
-            <button>G</button>
-            <button>H</button>
-            <button>J</button>
-            <button>K</button>
-            <button>L</button>
+            <button class="key">A</button>
+            <button class="key">S</button>
+            <button class="key">D</button>
+            <button class="key">F</button>
+            <button class="key">G</button>
+            <button class="key">H</button>
+            <button class="key">J</button>
+            <button class="key">K</button>
+            <button class="key">L</button>
         </div>
         <div class="keyboard-row">
-            <button class="enter-key">ENTER</button>
-            <button>Z</button>
-            <button>X</button>
-            <button>C</button>
-            <button>V</button>
-            <button>B</button>
-            <button>N</button>
-            <button>M</button>
-            <button class="backspace-key">⌫</button>
+            <button class="key enter-key">ENTER</button>
+            <button class="key">Z</button>
+            <button class="key">X</button>
+            <button class="key">C</button>
+            <button class="key">V</button>
+            <button class="key">B</button>
+            <button class="key">N</button>
+            <button class="key">M</button>
+            <button class="key backspace-key">⌫</button>
         </div>
+    </div>
+
+    <div class="alert winning-alert">
+        <strong>You Won!</strong>
+        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+
+    <div class="alert losing-alert">
+        <p>You Lose!</p> 
+        <span></span>
+        <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
     </div>
 
     <script src="script.js"></script>

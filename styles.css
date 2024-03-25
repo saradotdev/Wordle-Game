@@ -24,6 +24,7 @@ body {
 
 .help-icon {
     height: 30px;
+    cursor: pointer;
 }
 
 .main-heading {
@@ -84,15 +85,15 @@ body {
 }
 
 .correct {
-    background-color: #538d4e;
+    background-color: #538d4e !important;
 }
 
 .close {
-    background-color: #b59f3b;
+    background-color: #b59f3b !important;
 }
 
 .wrong {
-    background-color: #787c7e;
+    background-color: #787c7e !important;
 }
 
 @keyframes shake {
@@ -130,7 +131,7 @@ body {
     flex-wrap: nowrap;
 }
 
-.keyboard-row > button {
+.key {
     text-align: center;
     height: 65px;
     width: 40px;
@@ -141,17 +142,81 @@ body {
     margin: 3px 2px;
     background-color: transparent;
     border: 2px solid #8a8a8a;
-    color: #8a8a8a;
+    color: #ffffff;
     border-radius: 10px;
     cursor: pointer;
 }
 
-.keyboard-row .enter-key {
+.key-light-mode {
+    color: #141414;
+}
+
+.enter-key {
     font-size: 10px;
     width: 60px;
 }
 
-.keyboard-row .backspace-key {
+.backspace-key {
     font-size: 15px;
     width: 60px;
+}
+
+.alert {
+    display: none;
+    width: 25%;
+    position: fixed;
+    top: 9.5%;
+    left: 50%;
+    font-size: 30px;
+    padding: 2% 5%;
+    color: #141414;
+    border: 5px solid #8a8a8a;
+    transform: translate(-50%, -50%);
+    font-family: "Libre Franklin", sans-serif;
+    border-radius: 10px;
+}
+
+.winning-alert {
+    background-color: #538d4e;
+}
+
+.losing-alert {
+    font-size: 20px;
+    background-color: #a32920;
+}
+
+.losing-alert p {
+    font-size: 30px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: bold;
+}
+
+.close-btn:hover {
+    cursor: pointer;
+}
+
+.how-to-play {
+    display: none;
+    width: 35%;
+    height: 88%;
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    font-size: 20px;
+    padding: 7% 2%;
+    color: #8a8a8a;
+    background-color: inherit;
+    border: 3px solid #8a8a8a;
+    transform: translate(-50%, -50%);
+    font-family: "Libre Franklin", sans-serif;
+    border-radius: 10px;
+}
+
+.how-to-play p {
+    margin-top: 5%;
 }
