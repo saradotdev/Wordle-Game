@@ -9,6 +9,27 @@ body {
     color: #8a8a8a;
 }
 
+.spiral-bar {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spiral {
+    display: none;
+    position: absolute;
+    top: 30%;
+    font-size: 40px;
+    animation: spin 1.5s linear infinite;
+}
+
 .light-mode {
     background-color: #ffffff;
 }
@@ -208,7 +229,7 @@ body {
     top: 55%;
     left: 50%;
     font-size: 20px;
-    padding: 7% 2%;
+    padding: 7% 4%;
     color: #8a8a8a;
     background-color: inherit;
     border: 3px solid #8a8a8a;
@@ -219,4 +240,8 @@ body {
 
 .how-to-play p {
     margin-top: 5%;
+}
+
+.how-to-play h2 {
+    text-align: center;
 }

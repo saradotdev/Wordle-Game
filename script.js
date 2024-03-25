@@ -4,11 +4,20 @@ inputRows = document.querySelectorAll(".input-row");
 keyboardKeys = document.querySelectorAll(".key");
 helpIcon = document.querySelector(".help-icon");
 howToPlay = document.querySelector(".how-to-play");
+loadingDiv = document.querySelector(".spiral");
 let done = false;
 let rounds = 6;
 let secretWord;
 let formedWord = "";
 let letterBoxes;
+
+function setLoading(isLoading) {
+    if (isLoading) {
+        loadingDiv.style.display = "block";
+    } else if (!isLoading) {
+        loadingDiv.style.display = "none";
+    }
+}
 
 function toggleMode(event) { // for light and dark themes
     let buttonImgPath = event.target.src;
@@ -69,8 +78,7 @@ async function handleEnter(id) {
         if (await validateWord(formedWord) === true) {
             rounds--;
             checkWord();
-            console.log(rounds);
-            if (rounds <= 0) {
+            if (!done && rounds <= 0) {
                 showLosingAlert();
             }
             if (!done) {
@@ -83,12 +91,17 @@ async function handleEnter(id) {
 }
 
 async function validateWord(word) {
+    let isLoading = true;
+    setLoading(isLoading);
     const promise = await fetch("https://words.dev-apis.com/validate-word", {
         method: "POST",
         body: JSON.stringify({"word": word})
     });
     const response = await promise.json();
     const isValid = response["validWord"];
+    isLoading = false;
+    setLoading(isLoading);
+
     return isValid;
 }
 
@@ -235,9 +248,13 @@ function showLosingAlert() {
 }
 
 async function init() {
+    let isLoading = true;
+    setLoading(isLoading);
     const promise = await fetch("https://words.dev-apis.com/word-of-the-day");
     const response = await promise.json();
     secretWord = response["word"].toUpperCase();
+    isLoading = false;
+    setLoading(isLoading);
 
     toggleButton.addEventListener("click", function(event) {
         toggleMode(event);
