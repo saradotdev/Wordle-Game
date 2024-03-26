@@ -226,6 +226,7 @@ body {
     display: none;
     width: 35%;
     height: 88%;
+    min-width: 450px;
     position: fixed;
     top: 55%;
     left: 50%;
