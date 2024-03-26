@@ -247,6 +247,10 @@ function showLosingAlert() {
     wordReveal.innerText = "The word was " + secretWord;
 }
 
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
 async function init() {
     let isLoading = true;
     setLoading(isLoading);
@@ -255,6 +259,12 @@ async function init() {
     secretWord = response["word"].toUpperCase();
     isLoading = false;
     setLoading(isLoading);
+
+    if (isMobileDevice()) { // disabling input for mobile devices so users can use on-screen keyboard to type
+        inputs.forEach(input => {
+            input.readOnly = true;
+        })
+    }
 
     toggleButton.addEventListener("click", function(event) {
         toggleMode(event);
