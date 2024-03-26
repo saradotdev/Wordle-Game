@@ -185,6 +185,7 @@ body {
 .alert {
     display: none;
     width: 25%;
+    min-width: 200px;
     position: fixed;
     top: 9.5%;
     left: 50%;
