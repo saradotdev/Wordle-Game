@@ -225,8 +225,8 @@ body {
 .how-to-play {
     display: none;
     width: 35%;
-    height: 88%;
-    max-height: 90%;
+    height: auto;
+    max-height: 88%;
     min-width: 400px;
     max-width: 85%;
     position: fixed;
