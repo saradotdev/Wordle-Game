@@ -226,6 +226,7 @@ body {
     display: none;
     width: 35%;
     height: 88%;
+    max-height: 90%;
     min-width: 400px;
     max-width: 85%;
     position: fixed;
