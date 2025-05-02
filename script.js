@@ -136,6 +136,9 @@ function checkWord() {
         if (secretWordLetters[i] === formedWordLetters[i]) {
             keyboardKeys.forEach(key => {
                 if (key.innerText === formedWordLetters[i]) {
+                    if (key.classList.contains("close")) {
+                        key.classList.remove("close");
+                    }
                     key.classList.add("correct");
                     allRight += 1;
                 }
@@ -150,7 +153,9 @@ function checkWord() {
                     }
                 }
             });
-            letterBoxes[i].classList.add("close");
+            if (!letterBoxes[i].classList.contains("correct")) {
+                letterBoxes[i].classList.add("close");
+            }
             occurrences[formedWordLetters[i]]--;
         } else if (secretWordLetters[i] !== formedWordLetters[i]) {
             keyboardKeys.forEach(key => {
@@ -160,7 +165,9 @@ function checkWord() {
                     }
                 }
             });
-            letterBoxes[i].classList.add("wrong");
+            if (!letterBoxes[i].classList.contains("correct") && !letterBoxes[i].classList.contains("close")) {
+                letterBoxes[i].classList.add("wrong");
+            }
         }
     }
 
