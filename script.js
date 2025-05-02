@@ -232,10 +232,28 @@ function handleKeyPress() {
             }
 
             if (isLetter(event.target.innerText)) {
-                for (let i = 0; i < inputs.length; i++) {
-                    if (inputs[i].value.length === 0) {
-                        inputs[i].value = event.target.innerText;
-                        inputs[i + 1].focus();
+                for (let i = 0; i < inputRows.length; i++) {
+                    const row = inputRows[i];
+                    const letterBoxes = row.querySelectorAll(".input-letter");
+            
+                    if (!letterBoxes[0].readOnly) {
+                        let filledCount = 0;
+                        letterBoxes.forEach(box => {
+                            if (box.value.length === 1) filledCount++;
+                        });
+            
+                        if (filledCount < 5) {
+                            letterBoxes[filledCount].value = event.target.innerText;
+                            if (filledCount < 4) {
+                                letterBoxes[filledCount + 1].focus();
+                            } else {
+                                letterBoxes[filledCount].focus();
+                            }
+                        } else {
+                            letterBoxes[4].value = event.target.innerText;
+                            letterBoxes[4].focus();
+                        }
+            
                         break;
                     }
                 }
