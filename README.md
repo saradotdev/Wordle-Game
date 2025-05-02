@@ -23,6 +23,6 @@ git clone https://github.com/saradotdev/Wordle-Game.git
 ```
 
 ## 🔗 Try It Out!
-[Wordle Game](https://saradotdev.github.io/Wordle-Game/)
+[(https://saradotdev.github.io/Wordle-Game/)](https://saradotdev.github.io/Wordle-Game/)
 
 ![Wordle Game](wordle.png)
