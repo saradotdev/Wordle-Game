@@ -45,14 +45,34 @@ function isLetter(value) {
 
 function handleKeyStroke(value, id, inputRow) {
     letterBoxes = document.querySelectorAll(`#${inputRow.id} .input-letter`);
+
     if (isLetter(value)) {
-        letterBoxes[parseInt(id) + 1].focus();
+        let firstEmptyBox = Array.from(letterBoxes).find(box => box.value === "");
+        
+        if (firstEmptyBox) {
+            firstEmptyBox.value = value;
+            firstEmptyBox.focus();
+        } else {
+            letterBoxes[letterBoxes.length - 1].value = value;
+            letterBoxes[letterBoxes.length - 1].focus();
+        }
     }
 }
 
-function handleBackspace(id) {
-    if (inputs[parseInt(id)].value.length === 0) {
-        inputs[parseInt(id) - 1].focus();
+function handleBackspace(event) {
+    const currentInput = event.target;
+    const id = parseInt(currentInput.id);
+    const currentRow = currentInput.parentElement;
+    const letterInputs = currentRow.querySelectorAll(".input-letter");
+
+    if (letterInputs[0].readOnly) return;
+
+    if (currentInput.value.length > 0) {
+        currentInput.value = "";
+    } else if (id > 0) {
+        const previousInput = letterInputs[id - 1];
+        previousInput.focus();
+        previousInput.value = "";
     }
 }
 
@@ -76,6 +96,7 @@ async function handleEnter(id) {
 
     if (formedWord.length === 5) {
         if (await validateWord(formedWord) === true) {
+            letterBoxes.forEach(box => box.readOnly = true);
             rounds--;
             checkWord();
             if (!done && rounds <= 0) {
@@ -124,7 +145,9 @@ function checkWord() {
         } else if (occurrences[formedWordLetters[i]] > 0) {
             keyboardKeys.forEach(key => {
                 if (key.innerText === formedWordLetters[i]) {
-                    key.classList.add("close");
+                    if (!key.classList.contains("correct")) {
+                        key.classList.add("close");
+                    }
                 }
             });
             letterBoxes[i].classList.add("close");
@@ -132,7 +155,9 @@ function checkWord() {
         } else if (secretWordLetters[i] !== formedWordLetters[i]) {
             keyboardKeys.forEach(key => {
                 if (key.innerText === formedWordLetters[i]) {
-                    key.classList.add("wrong");
+                    if (!key.classList.contains("correct") && !key.classList.contains("close")) {
+                        key.classList.add("wrong");
+                    }
                 }
             });
             letterBoxes[i].classList.add("wrong");
@@ -178,18 +203,18 @@ function handleInput() {
             if (done) {
                 return;
             }
-
+    
             if (event.key === "Backspace") {
-                handleBackspace(event.target.id);
+                handleBackspace(event);
             } else if (event.key === "Enter") {
                 handleEnter(event.target.parentElement.id);
             } else if (isLetter(event.key)) {
-                handleKeyStroke(event.target.value, event.target.id, event.target.parentElement);
+                handleKeyStroke(event.key, event.target.id, event.target.parentElement);
             } else {
                 event.preventDefault();
             }
         });
-    });
+    });    
 }
 
 function handleKeyPress() {
@@ -212,12 +237,12 @@ function handleKeyPress() {
                     for (let i = inputRows.length - 1; i >= 0; i--) {
                         letterBoxes = document.getElementById(inputRows[i].id).getElementsByClassName("input-letter");
                         for (let j = letterBoxes.length - 1; j >= 0; j--) {
-                            if (letterBoxes[j].value.length === 1) {
+                            if (!letterBoxes[j].readOnly && letterBoxes[j].value.length === 1) {
                                 letterBoxes[j].value = "";
                                 letterBoxes[j].focus();
                                 break loop;
                             }
-                        }
+                        }                        
                     }
             } else if (event.target.innerText === "ENTER") {
                 for (let i = inputRows.length - 1; i >= 0; i--) {
